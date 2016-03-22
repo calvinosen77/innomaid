@@ -1,0 +1,12 @@
+<?php foreach($company->availableJobs($user->id) as $item): ?>
+    <div class="row margin-bottom-xs">
+        <div class="col-sm-9 padding-top-xs">
+            <?php echo $item->name; ?>
+
+        </div>
+
+        <div class="col-sm-3 text-right">
+            <button type="button" class="btn btn-circle btn-primary" onclick="moveToJob(this)" data-jobId="<?php echo $item->id; ?>" data-userId="<?php echo $user->id; ?>">Move</button>
+        </div>
+    </div>
+<?php endforeach; ?>

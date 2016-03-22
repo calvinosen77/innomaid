@@ -1,0 +1,96 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+.form_control {
+position: relative;
+text-align: center;
+width:375px;
+}
+
+.form_control4 {
+text-align: center;
+background:#43C6DB;
+padding: 5px 5px;
+margin: 10px;
+}
+
+.end {
+  text-align: end;
+}
+.start {
+  text-align: start;
+}
+
+.nopadding {
+  padding: 0px;
+}
+
+.parallax-container {
+   position: relative;
+  overflow: hidden;
+  min-height: 100%;
+	height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
+	height: 100%;
+	margin: 0 auto; /* the bottom margin is the negative value of the footer's height */
+}
+
+
+.parallax-container2 {
+   position: relative;
+  overflow: hidden;
+  height: 500px;
+}
+
+.banner { 
+   position: relative; 
+   top: 50px; 
+   left: 0; 
+   width: 100%; 
+}
+
+.page-footer, .push {
+	height: 200px; /* .push must be the same height as .footer */
+}
+
+.play {
+   
+    margin: -70px 0px 0 20px;
+    height: auto;
+    position: relative;
+    z-index: 10;
+}
+
+.play2 {
+   
+    margin: -48px 18px 0 20px;
+    height: auto;
+    position: relative;
+    z-index: 10;
+}
+
+.back{
+  background: #808080;
+  height:100%;
+}
+
+.wrapper {
+	min-height: 100%;
+	height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
+	height: 100%;
+	margin: 0 auto -200px; /* the bottom margin is the negative value of the footer's height */
+}
+
+.b20 {
+  padding-bottom: 20px !important;
+}

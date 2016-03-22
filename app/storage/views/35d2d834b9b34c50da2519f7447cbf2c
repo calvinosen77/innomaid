@@ -1,0 +1,5 @@
+<script type="text/javascript">
+    $('[name=backButton]').click(function(){
+        location.href = '<?php echo URL::route('user.user.homepage'); ?>';
+    })
+</script>

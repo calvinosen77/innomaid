@@ -1,0 +1,100 @@
+<?php $__env->startSection('body'); ?>
+<main class="background-auth">
+	<div class="auth-container-color">
+		<div class="container">
+		    <div class="row text-center">
+		        <h1 class="margin-top-xl"><?php echo trans('auth.msg_02'); ?></h1>
+		    </div>
+		    <div class="row text-center">
+		    	<h4>( <?php echo trans('auth.employer'); ?> )</h4>
+		    </div>
+		    
+		    <div class="col-sm-6 col-sm-offset-3 margin-top-lg">
+		        <?php if($errors->has()): ?>
+		        <div class="alert alert-danger alert-dismissibl fade in">
+		            <button type="button" class="close" data-dismiss="alert">
+		                <span aria-hidden="true">&times;</span>
+		                <span class="sr-only">Close</span>
+		            </button>
+		            <?php foreach($errors->all() as $error): ?>
+		        		<p><?php echo $error; ?></p>		
+		        	<?php endforeach; ?>
+		        </div>
+		        <?php endif; ?>    
+		        
+		        <?php if (isset($alert)) { ?>
+		        <div class="alert alert-<?php echo $alert['type'];?> alert-dismissibl fade in">
+		            <button type="button" class="close" data-dismiss="alert">
+		                <span aria-hidden="true">&times;</span>
+		                <span class="sr-only"><?php echo trans('auth.submit'); ?></span>
+		            </button>
+		            <p>
+		                <?php echo $alert['msg'];?>
+		            </p>
+		        </div>
+		        <?php } ?>
+		    </div>    
+		    
+		    <form method="POST" action="<?php echo URL::route('user.auth.doSignup'); ?>" role="form" class="form-login margin-top-normal">
+		        <?php foreach([
+		            'name' => trans('auth.your_name').' *',
+		            'email' => trans('auth.email').' *',
+		            'password' => trans('auth.password').' *',
+		            'password_confirmation' => trans('auth.confirm_password').' *',
+		            'city_id' => trans('auth.location').' *',
+		        ] as $key => $value): ?>
+		            <div class="row margin-top-normal">
+		                <div class="col-sm-6 col-sm-offset-3">
+		                    <div class="form-group">
+		                        <label><?php echo Form::label($key, $value); ?></label>
+		                        <?php if($key == 'password'): ?>
+		                            <?php echo Form::password($key, ['class' => 'form-control']); ?>
+
+		                        <?php elseif($key == 'password_confirmation'): ?>                        
+		                        	<?php echo Form::password($key, ['class' => 'form-control']); ?>
+
+		                        <?php elseif($key == 'gender'): ?>
+		                            <?php echo Form::select($key
+		                               , array('0' => 'Male', '1' => 'Female')
+		                               , null
+		                               , array('class' => 'form-control')); ?>
+
+			                    <?php elseif($key == 'city_id'): ?>
+		                            <?php echo Form::select($key
+		                               , $cities->lists('name', 'id')
+		                               , null
+		                               , array('class' => 'form-control')); ?>
+
+		                        <?php elseif($key == 'category_id'): ?>
+		                            <?php echo Form::select($key
+		                               , $categories->lists('name', 'id')
+		                               , null
+		                               , array('class' => 'form-control')); ?>
+
+		                        <?php elseif($key == 'level_id'): ?>
+		                            <?php echo Form::select('level_id'
+		                               , $levels->lists('name', 'id')
+		                               , null
+		                               , array('class' => 'form-control')); ?>		                       		                        			                    
+		                        <?php else: ?>
+		                            <?php echo Form::text($key, null, ['class' => 'form-control']); ?>
+
+		                        <?php endif; ?>
+		                    </div>
+		                </div>
+		            </div>        
+		        <?php endforeach; ?>   
+		        
+		        <div class="row margin-top-normal padding-bottom-xl">
+		            <div class="col-sm-2 col-sm-offset-5">
+		                <button class="btn btn-lg btn-primary text-uppercase btn-block" style="background-color: #125B9B;"><?php echo trans('auth.submit'); ?> <span class="glyphicon glyphicon-ok-circle"></span></button>
+		            </div>
+		        </div>
+		    </form> 
+		</div>
+	</div>           
+</main>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('user.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,291 @@
+<?php $__env->startSection('styles'); ?>
+
+    <!-- Bootstrap core CSS -->
+	<?php echo HTML::style('/assets/backend/css/bootstrap.min.css'); ?>
+
+	<?php echo HTML::style('/assets/backend/css/bootstrap-reset.css'); ?>
+
+
+	<!--external css-->
+	<?php echo HTML::style('/assets/backend/font-awesome/css/font-awesome.css'); ?>
+
+    <?php echo HTML::style('/assets/backend/data-tables/DT_bootstrap.css'); ?>
+
+
+    <!--right slidebar-->
+    <?php echo HTML::style('/assets/backend/css/slidebars.css'); ?>
+
+
+    <!--Form Wizard-->
+    <?php echo HTML::style('/assets/backend/css/jquery.steps.css'); ?>
+
+
+    <?php echo HTML::style('/assets/backend/advanced-datatable/media/css/demo_page.css'); ?>
+
+    <?php echo HTML::style('/assets/backend/advanced-datatable/media/css/demo_table.css'); ?>
+
+
+    <?php echo HTML::style('/assets/backend/toastr-master/toastr.css'); ?>
+
+    <?php echo HTML::style('/assets/backend/css/table-responsive.css'); ?>
+
+
+    <!-- Custom styles for this template -->
+    <?php echo HTML::style('/assets/backend/css/style.css'); ?>
+
+    <?php echo HTML::style('/assets/backend/css/custom.css'); ?>
+
+
+    <?php echo HTML::style('/assets/backend/css/style-responsive.css'); ?>
+
+
+    <?php echo HTML::style('/assets/backend/css/datepicker.css'); ?>
+
+
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('header'); ?>
+
+    <section id="container" class="">
+      <!--header start-->
+      <header class="header white-bg">
+          <div class="sidebar-toggle-box">
+            <div data-original-title="Toggle Navigation" data-placement="right" class="fa fa-bars tooltips"></div>
+          </div>
+          <!--logo start-->
+          <a href="<?php echo URL::route('admin.admin.index'); ?>" class="logo" ><img alt="" src="/assets/backend/img/custom/left_banner.png" height="30"></a>
+          <!--logo end-->
+          <div class="top-nav ">
+              <ul class="nav pull-right top-menu">
+                  <!-- user login dropdown start-->
+                  <li class="dropdown">
+                      <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+<?php /*
+                          <img alt="" src="/assets/backend/img/avatar1_small.jpg">
+*/ ?>
+                          <span class="username"><?php echo Session::get('user_name'); ?></span>
+                          <b class="caret"></b>
+                      </a>
+                      <ul class="dropdown-menu extended logout">
+                          <div class="log-arrow-up"></div>
+                          <li><a href="<?php echo URL::route('admin.users.profile'); ?>"><i class=" fa fa-suitcase"></i>Profile</a></li>
+<?php /*
+                          <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                          <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+*/ ?>
+                          <li><a href="<?php echo URL::route('admin.admin.logout'); ?>"><i class="fa fa-key"></i>Log Out</a></li>
+                      </ul>
+                  </li>
+                  <!-- user login dropdown end -->
+              </ul>
+          </div>
+      </header>
+      <!--header end-->
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+      <!--sidebar start-->
+      <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+
+                  <li>
+                      <a href="<?php echo URL::route('admin.admin.index'); ?>">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Dashboard</span>
+                      </a>
+                  </li>
+                <?php if(Session::get('user_group') == 1): ?>
+                  <li>
+                      <a href="<?php echo URL::route('admin.agency.index'); ?>">
+                          <i class="fa fa-users"></i>
+                          <span>Agency Management</span>
+                      </a>
+                  </li>
+                <?php endif; ?>
+                  <li>
+                      <a href="<?php echo URL::route('admin.maidapplication.application'); ?>">
+                          <i class="fa fa-desktop"></i>
+                          <span>Maid Application</span>
+                      </a>
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="<?php echo URL::route('admin.maids.editMaid'); ?>">
+                          <i class="fa fa-briefcase"></i>
+                          <span>Maids</span>
+                      </a>
+<?php /*
+                      <ul class="sub">
+                          <li><a  href="">Add Maid</a></li>
+                      </ul>
+*/ ?>
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="<?php echo URL::route('admin.employers.employer'); ?>" >
+                          <i class="fa fa-suitcase"></i>
+                          <span>Employers</span>
+                      </a>
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-tasks"></i>
+                          <span>Suppliers</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="<?php echo URL::route('admin.suppliers.addSupplier'); ?>">Add Supplier</a></li>
+                          <li><a  href="<?php echo URL::route('admin.suppliers.editSupplier'); ?>">Edit Supplier</a></li>
+                      </ul>
+                  </li>
+
+                  <li>
+                      <a href="<?php echo URL::route('admin.payment.payment'); ?>">
+                          <i class="fa fa-usd"></i>
+                          <span>Payment</span>
+                      </a>
+                  </li>
+
+                  <li>
+                      <a href="<?php echo URL::route('admin.refund.refund'); ?>">
+                          <i class="fa fa-share-square-o"></i>
+                          <span>Refund</span>
+                      </a>
+                  </li>
+
+                  <li>
+                      <a href="<?php echo URL::route('admin.reports.reports'); ?>">
+                          <i class="fa fa-clipboard"></i>
+                          <span>Reports</span>
+                      </a>
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-user"></i>
+                          <span>Users</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="<?php echo URL::route('admin.users.addUser'); ?>">Add User</a></li>
+                          <li><a  href="<?php echo URL::route('admin.users.editUser'); ?>">Edit User</a></li>
+                          <li><a  href="<?php echo URL::route('admin.users.settingUser'); ?>">Setting</a></li>
+                      </ul>
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-list"></i>
+                          <span>Company Profile</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="<?php echo URL::route('admin.companyprofile.profileCompany'); ?>">Profile</a></li>
+                          <li><a  href="<?php echo URL::route('admin.companyprofile.editCompany'); ?>">Edit Profile</a></li>
+                      </ul>
+                  </li>
+
+                  <li>
+                      <a href="<?php echo URL::route('admin.settings.settings'); ?>">
+                          <i class="fa fa-cogs"></i>
+                          <span>Settings</span>
+                      </a>
+                  </li>
+
+
+
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
+      <!--sidebar end-->
+
+    <?php echo $__env->yieldContent('content'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer'); ?>
+      <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              2015 &copy; InnoMaid Portal Site by Company.
+              <a href="#" class="go-top">
+                  <i class="fa fa-angle-up"></i>
+              </a>
+          </div>
+      </footer>
+      <!--footer end-->
+    </section>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <?php echo HTML::script('/assets/backend/js/jquery.js'); ?>
+
+    <?php echo HTML::script('/assets/backend/js/jquery-ui-1.9.2.custom.min.js'); ?>
+
+    <?php echo HTML::script('/assets/backend/js/jquery-migrate-1.2.1.min.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/js/bootstrap.min.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/js/jquery.dcjqaccordion.2.7.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/js/jquery.scrollTo.min.js'); ?>
+
+    <?php echo HTML::script('/assets/backend/js/jquery.nicescroll.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/data-tables/jquery.dataTables.js'); ?>
+
+    <?php echo HTML::script('/assets/backend/data-tables/DT_bootstrap.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/js/respond.min.js'); ?>
+
+    <?php echo HTML::script('/assets/backend/js/slidebars.min.js'); ?>
+
+    <?php echo HTML::script('/assets/backend/js/common-scripts.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/js/editable-table.js'); ?>
+
+
+    <!--Form Validation-->
+    <?php echo HTML::script('/assets/backend/js/bootstrap-validator.min.js'); ?>
+
+
+    <!--Form Wizard-->
+    <?php echo HTML::script('/assets/backend/js/jquery.steps.min.js'); ?>
+
+    <?php echo HTML::script('/assets/backend/js/jquery.validate.min.js'); ?>
+
+    <!--script for this page-->
+    <?php echo HTML::script('/assets/backend/js/jquery.stepy.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/advanced-datatable/media/js/jquery.dataTables.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/js/dynamic_table_init.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/toastr-master/toastr.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/jquery-knob/js/jquery.knob.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/js/bootstrap-switch.js'); ?>
+
+
+    <?php echo HTML::script('/assets/backend/js/bootstrap-datepicker.js'); ?>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

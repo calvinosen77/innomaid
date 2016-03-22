@@ -1,0 +1,13 @@
+<?php $__env->startSection('content'); ?>
+	<b>This page will come soon.</b>   
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('custom_scripts'); ?>
+    <?php echo HTML::script('/assets/js/bootbox.js'); ?>
+
+    <?php echo $__env->make('js.admin.city.index', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

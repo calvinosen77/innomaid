@@ -1,0 +1,21 @@
+    <?php $__env->startSection('content'); ?>
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper site-min-height">
+              <!-- page start-->
+              Page content goes here
+              <!-- page end-->
+          </section>
+      </section>
+      <!--main content end-->
+    <?php $__env->stopSection(); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('custom-scripts'); ?>
+<?php /*
+    <?php echo $__env->make('js.admin.addMaid', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>;
+*/ ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,102 @@
+<?php $__env->startSection('custom-styles'); ?>
+<?php echo HTML::style('/assets/css/bootstrap-colorpicker.min.css'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+<main class="bs-docs-masthead gray-container padding-top-xs padding-bottom-xs" role="main">
+    <div class="container" style="background: white;">
+        <div class="row margin-top-lg text-center">
+            <div class="col-sm-12">
+                <h2 class=""><?php echo trans('company.settings'); ?></h2>
+            </div>
+        </div>
+        
+        <div class="row">
+        
+            <?php if(isset($alert)): ?>
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="alert alert-<?php echo $alert['type']; ?> alert-dismissibl fade in">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <p>
+                            <?php echo $alert['msg']; ?>
+
+                        </p>
+                    </div>                
+                </div>
+            <?php endif; ?>
+                    
+            <div class="col-sm-8 col-sm-offset-2">
+                <form class="form-horizontal margin-top-lg margin-bottom-lg" role="form" method="post" action="<?php echo URL::route('company.setting.store'); ?>">
+                    <?php foreach([
+                        'start_at' => trans('company.start_at'),
+                        'end_at' => trans('company.end_at'),
+                        'slot_background' => trans('company.slot_background'),
+                    ] as $key => $value): ?>                
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"><?php echo $value; ?></label>
+                        <div class="col-sm-9">
+                            <?php if($key == 'slot_background'): ?>
+                            <div class="input-group" id="js-div-color-picker">
+                                <input type="text" class="form-control" name="<?php echo $key; ?>" value="<?php echo ($company->setting) ? $company->setting->{$key} : DEFAULT_SLOT_BACKGROUND; ?>">
+                                <span class="input-group-addon"><i></i></span>
+                            </div>                            
+                            <?php elseif($key == 'start_at'): ?>
+                            <div class="input-group" id="js-div-start-at">
+                                <input type="text" class="form-control" name="<?php echo $key; ?>" value="<?php echo ($company->setting) ? $company->setting->{$key} : DEFAULT_START_AT; ?>">
+                                <span class="input-group-btn">
+                                    <button class="btn default" type="button"><i class="fa fa-clock-o"></i></button>
+                                </span>
+                            </div>
+                            <?php elseif($key == 'end_at'): ?>
+                            <div class="input-group" id="js-div-end-at">
+                                <input type="text" class="form-control" name="<?php echo $key; ?>" value="<?php echo ($company->setting) ? $company->setting->{$key} : DEFAULT_END_AT; ?>">
+                                <span class="input-group-btn">
+                                    <button class="btn default" type="button"><i class="fa fa-clock-o"></i></button>
+                                </span>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                    
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10 text-center">
+                            <button class="btn btn-primary">
+                                <span class="glyphicon glyphicon-ok-circle"></span> <?php echo trans('company.save'); ?>
+
+                            </button>
+                            <a href="<?php echo URL::route('admin.category'); ?>" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-share-alt"></span> <?php echo trans('company.back'); ?>
+
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<?php $__env->startSection('custom-scripts'); ?>
+<?php echo HTML::script('/assets/js/bootstrap-colorpicker.js'); ?>
+
+<script>
+$(document).ready(function() {
+    $('div#js-div-color-picker').colorpicker();
+    $("input[name='start_at']").timepicker({autoclose: true, minuteStep: 5, showSeconds: false, showMeridian: false});
+    $("input[name='end_at']").timepicker({autoclose: true, minuteStep: 5, showSeconds: false, showMeridian: false});
+    $('span.input-group-btn').click(function() {
+        $(this).parents("div").eq(0).find("input").timepicker('showWidget');
+    });
+});
+
+</script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('company.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

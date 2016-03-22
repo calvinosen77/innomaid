@@ -1,0 +1,532 @@
+<?php 
+	$bid_flag = array();
+	$cart_flag = array();
+	
+	foreach ($jobs as $job) {
+		$bid_flag[$job->id] = 0;
+		$cart_flag[$job->id] = 0;
+	}
+	
+	if (isset($user)) {		
+		foreach ($user->applies as $apply) {
+			$bid_flag[$apply->job_id] = 1;
+		}
+		
+		foreach ($user->carts as $cart) {
+			$cart_flag[$cart->job_id] = 1;
+		}
+	}
+?>
+
+
+
+<?php $__env->startSection('custom-styles'); ?>
+    <link rel="stylesheet" href="/assets/css/bootstrap-slider.css">
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+<main class="bs-docs-masthead" role="main" style="min-height: 0px;">
+    <div class="search-container-image">
+        <div class="search-container-color">
+            <div class="container">
+                <div class="row search-bar">
+                    <form class="form-horizontal" method="post" action="<?php echo URL::route('user.job.search'); ?>" id="search_form">
+                        <div class="col-sm-2 custom-border-right custom-col-4 padding-normal">
+                            <div class="col-sm-2 custom-col-5 margin-top-xs">
+                                <div class="form-group search-container-field custom-margin">
+                                    <label class="color-blue"><?php echo trans('job.category'); ?></label>
+                                    <select class="form-control" name="category_id" id="category_select" onchange="getResult()">
+                                        <option value=""><?php echo trans('job.all'); ?></option>
+                                        <?php foreach($categories as $category): ?>
+                                        <option value="<?php echo $category->id; ?>" <?php echo ($category->id == $category_id) ? 'selected' : ''; ?>><?php echo $category->name; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 custom-col-5 margin-top-xs">
+                                <div class="form-group search-container-field custom-margin">
+                                    <label class="color-blue"><?php echo trans('job.sub-category'); ?></label>
+                                    <div id="sub-category-box"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group search-container-field custom-margin">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="<?php echo trans('job.plc_01'); ?>" name="keyword" value="<?php echo $keyword; ?>" onkeyup="reloadResult(this)">
+                                        <div class="input-group-btn">
+                                            <button class="btn blue" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 custom-border-right custom-col-2 padding-normal">
+
+                            <div class="margin-top-xs">
+                                <div class="form-group search-container-field custom-margin">
+                                    <label class="color-blue"><?php echo trans('job.job_type'); ?></label>
+                                    <select class="form-control" name="type_id" id="type_select" onchange="getResult()">
+                                        <option value=""><?php echo trans('job.all_work_types'); ?></option>
+                                        <?php foreach($types as $type): ?>
+                                        <option value="<?php echo $type->id; ?>" <?php echo ($type->id == $type_id) ? 'selected' : ''; ?>><?php echo $type->name; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="margin-top-xs">
+                                <label class="color-blue">Time Period</label>
+                            
+								
+                                <select class="form-control" id="period" name="period" onchange="getResult()">
+                                    <option value="0" <?php echo ($period == 0) ? 'selected' : ''; ?>><?php echo trans('job.any'); ?></option>
+                                    <option value="1" <?php echo ($period == 1) ? 'selected' : ''; ?>><?php echo trans('job.today'); ?></option>
+                                    <option value="3" <?php echo ($period == 3) ? 'selected' : ''; ?>><?php echo trans('job.last_3_days'); ?></option>
+                                    <option value="7" <?php echo ($period == 7) ? 'selected' : ''; ?>><?php echo trans('job.last_7_days'); ?></option>
+                                    <option value="30" <?php echo ($period == 30) ? 'selected' : ''; ?>><?php echo trans('job.last_14_days'); ?></option>
+                                    <option value="60" <?php echo ($period == 60) ? 'selected' : ''; ?>><?php echo trans('job.last_30_days'); ?></option>
+                                </select>
+								
+                            </div>
+                        </div>
+                        <div class="col-sm-3 custom-border-right custom-col-2 padding-normal search-container-box">
+                            <div class="form-group search-container-field custom-margin">
+                                <label class="color-blue"><?php echo trans('job.salary'); ?></label>
+                                <div>
+                                    <input id="js-slider-waiting-time" data-slider-id='js-slider-waiting-time-slider' type="text" data-slider-min="0" data-slider-max="<?php echo BUDGET_MAX; ?>" data-slider-step="50" data-slider-value="[<?php echo $budget_min; ?>,<?php echo $budget_max; ?>]"/>
+                                </div>
+                                <div id="js-div-range-waiting-min" style="color:#1198eb;" class="text-center">
+                                    $<?php echo $budget_min; ?> - $<?php echo $budget_max; ?>
+
+                                </div>
+                                
+                                <input type="hidden" id="js-waiting-time-min" name="min" value="<?php echo $budget_min; ?>"/>
+                                <input type="hidden" id="js-waiting-time-max" name="max" value="<?php echo $budget_max; ?>"/>                               
+                            </div>
+                        </div> 
+                        <div class="col-sm-3 custom-col-2 padding-normal search-container-box">
+                            <div class="form-group search-container-field custom-margin">
+                                <label class="color-blue"><?php echo trans('job.location'); ?></label>
+						        <select class="form-control" name="city_id" onchange="getResult()">
+                                    <option value = "0"><?php echo trans('job.any'); ?></option>
+                                    <?php foreach($cities as $city): ?>
+                                        <option value="<?php echo $city->id; ?>" <?php if($city->id == $city_id): ?> selected <?php endif; ?>><?php echo $city->name; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>                      	
+                        </div>                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="gray-container padding-bottom-xs" style="min-height: 250px;">
+    <div class="container">
+        <div class="row">
+			<div class="row margin-top-normal">
+				<div class="col-sm-12">
+					<div class="col-sm-3">
+						<span class="table-header-span"><?php echo trans('job.job'); ?></span>
+					</div>
+					<div class="col-sm-1 text-center">
+						<span class="table-header-span"><?php echo trans('job.bids'); ?></span>
+					</div>
+					<div class="col-sm-3">
+						<span class="table-header-span"><?php echo trans('job.by'); ?></span>
+					</div>
+					<div class="col-sm-1 text-center" style="padding-left: 0px; padding-right: 0px;">
+						<span class="table-header-span"><?php echo trans('job.started'); ?></span>
+					</div>
+					<div class="col-sm-2 text-center">
+						<span class="table-header-span"><?php echo trans('job.recruitment_bonus'); ?></span>
+					</div>
+					<div class="col-sm-1">
+						<span class="table-header-span"><?php echo trans('job.salary'); ?></span>
+					</div>
+				</div>
+			</div>
+			
+			<?php foreach($jobs as $job): ?>
+			<div class="row margin-top-xs" id="div_job">
+				<div class="col-sm-12 table-job-row padding-top-xs">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="col-sm-3 padding-top-xxs">
+								<span><a href="<?php echo URL::route('user.dashboard.viewJob', $job->slug); ?>" id="a-job-title"><?php echo $job->name; ?></a></span>
+							</div>
+							<div class="col-sm-1 text-center padding-top-xxs">
+								<span><?php echo count($job->applies); ?></span>
+							</div>
+							<?php if($job->link_address == ''): ?>
+                                <div class="col-sm-3" style="position:relative;" data-toggle="tooltip" data-html="true" data-placement="bottom" data-image-url="<?php echo HTTP_LOGO_PATH.$job->company->parent->logo; ?>" data-tag="<?php echo $job->company->parent->tag; ?>" data-description="<?php echo nl2br($job->company->parent->description); ?>">
+                                    <div style="margin-top: 5px;">
+                                        <span class="pull-left"><a href="<?php echo URL::route('user.company.view', $job->company->parent->slug); ?>"><?php echo $job->company->parent->name; ?></a>&nbsp;&nbsp;</span>
+                                        <input id="input-rate" name="rating" class="rating pull-left" data-size="xxs" data-default-caption="{rating}" data-star-captions="{}" value="<?php echo $job->company->parent->reviews()->avg('score'); ?>" readonly>
+                                    </div>
+                                </div>
+                            <?php else: ?>
+                                <div class="col-sm-3"></div>
+                            <?php endif; ?>
+							<div class="col-sm-1 text-center padding-top-xxs" style="padding-left: 0px; padding-right: 0px;">
+								<?php 
+									$date = DateTime::createFromFormat('Y-m-d H:i:s', $job->created_at);
+								?>
+								<span> <?php echo $date->format('d-m-Y'); ?></span>	
+							</div>
+							<div class="col-sm-2 text-center padding-top-xxs">
+							    <span><?php echo ($job->bonus != 0) ? "$".$job->bonus : '---'; ?></span>
+							</div>
+							<div class="col-sm-1 text-center padding-top-xxs">
+							    <span><?php echo ($job->salary != 0) ? "$".$job->salary : '---'; ?></span>
+							</div>
+							<div class="col-sm-1 text-right">
+								<?php if($bid_flag[$job->id] == 1): ?>
+								<div style="padding-top: 4px; height: 28px;">
+									<span class="span-bid"><?php echo trans('job.applied'); ?></span>
+								</div>
+								<?php else: ?>
+								    <?php if($job->link_address == ''): ?>
+								        <button class="btn btn-success btn-sm btn-home" other-target="div_more" other-target-second="div_hint" other-target-third="div_overview" data-target="div_apply" onclick="showView(this)"><?php echo trans('job.apply'); ?></button>
+                                    <?php else: ?>
+                                        <a class="btn btn-success btn-sm btn-home" href="<?php echo $job->link_address; ?>"><?php echo trans('job.apply'); ?></a>
+                                    <?php endif; ?>
+								<?php endif; ?>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row margin-top-xxs">
+						<div class="col-sm-12">
+							<div class="col-sm-3">
+								<button class="btn btn-link btn-sm text-uppercase btn-job-table" other-target="div_more" other-target-second="div_hint" other-target-third="div_apply" data-target="div_overview" onclick="showView(this)"> <?php echo trans('job.overview'); ?></button>
+								<button class="btn btn-link btn-sm text-uppercase btn-job-table" other-target="div_overview" other-target-second="div_hint" other-target-third="div_apply" data-target="div_more" onclick="showView(this)"> <?php echo trans('job.more'); ?></button>
+							</div>
+							<div class="col-sm-4 col-sm-offset-1" style="padding-top: 2px;">
+								<?php 
+									$skillFlag = 0;
+									$skillLength = 0;
+								    foreach($job->skills as $skill) {
+										$skillLength += strlen($skill->name);
+										if ($skillLength >= 25) {
+											$skillFlag = 1;
+											break;
+										}	
+								?>
+									<label class="job-skill-label"><?php echo $skill->name; ?></label>
+								<?php }
+									if ($skillFlag == 1) {
+								?>
+									<label class="job-skill-label">...</label>
+								<?php }?>
+
+                                <?php
+                                    $total_skill='';
+                                    foreach ($job->skills as $skill) {
+                                        if ($total_skill == '') {
+                                            $total_skill = $skill->name;
+                                        }else {
+                                            $total_skill .= ','.$skill->name;
+                                        }
+                                    }
+                                ?>
+
+                                <input type="hidden" name="skill_name" id="skill_name" value="<?php echo $total_skill; ?>">
+
+							</div>
+							<div class="col-sm-2 text-center">
+							    <?php if($job->link_address == ''): ?>
+								    <button class="btn btn-link btn-sm text-uppercase btn-job-table" other-target="div_more" other-target-second="div_overview" other-target-third="div_apply" data-target="div_hint" onclick="showView(this)"><i class="fa fa-legal"></i> <?php echo trans('job.give_us_hint'); ?></button>
+								<?php endif; ?>
+							</div>
+							<div class="col-sm-2">
+							    <?php if($job->link_address == ''): ?>
+                                    <?php if($bid_flag[$job->id] == 0): ?>
+                                        <?php if($cart_flag[$job->id] == 0): ?>
+                                        <button class="btn btn-link btn-sm text-uppercase btn-job-table" data-id="<?php echo $job->id; ?>" id="js-btn-addToCart"><i class="fa fa-save"></i> <?php echo trans('job.add_to_application_cart'); ?></button>
+                                        <?php else: ?>
+                                        <div style="padding-top: 3px;">
+                                            <span class="text-uppercase span-cart"><?php echo trans('job.added_to_application_cart'); ?></span>
+                                        </div>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+								<?php endif; ?>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!-- Div for Overview -->
+					<div class="row" id="div_overview" style="display: none;">
+						<div class="col-sm-12 margin-top-xs">
+							<div class="alert alert-success alert-dismissibl fade in alert-custom">
+					            <button type="button" class="close" data-target="div_overview" onclick="hideView(this)">
+					                <span aria-hidden="true">&times;</span>
+					                <span class="sr-only"><?php echo trans('job.close'); ?></span>
+					            </button>
+								<p>
+									<span class="span-job-description-title"><?php echo trans('job.job_description'); ?>:</span>
+								</p>
+								<p>	
+									<span class="span-job-descripton-note"><?php echo nl2br($job->description); ?></span>
+								</p>
+								<p>&nbsp</p>
+								<p>
+									<span class="span-job-description-title"><?php echo trans('job.additional_requirements'); ?>:</span>
+								</p>
+								<p>	
+									<span class="span-job-descripton-note"><?php echo $job->requirements; ?></span>
+								</p>
+					        </div>
+						</div>
+					</div>
+					<!-- End for Overview -->
+					
+					<!-- Div for More -->
+					<div class="row" id="div_more" style="display: none;">
+						<div class="col-sm-12 margin-top-xs">
+							<div class="alert alert-success alert-dismissibl fade in alert-custom">
+					            <button type="button" class="close" data-target="div_more" onclick="hideView(this)">
+					                <span aria-hidden="true">&times;</span>
+					                <span class="sr-only"><?php echo trans('job.close'); ?></span>
+					            </button>
+								<p>
+									<span class="span-job-description-title"><?php echo trans('job.similar_jobs'); ?>:</span>
+								</p>
+								<?php foreach($job->similar() as $sjob): ?>
+								<p>	
+									<span class="span-job-descripton-note"><a href="<?php echo URL::route('user.dashboard.viewJob', $sjob->slug); ?>"><?php echo $sjob->name; ?></a></span>
+								</p>
+								<?php endforeach; ?>
+					        </div>								
+						</div>
+					</div>
+					<!-- End for More -->
+					
+					<!-- Div for Hint -->
+					<div class="row" id="div_hint" style="display: none;">
+						<div class="col-sm-12 margin-top-xs">
+							<div class="alert alert-success alert-dismissibl fade in alert-custom">
+					            <button type="button" class="close" data-target="div_hint" onclick="hideView(this)">
+					                <span aria-hidden="true">&times;</span>
+					                <span class="sr-only"><?php echo trans('job.close'); ?></span>
+					            </button>
+					            
+					            <div class="row">
+					     			
+					     			<input type="hidden" name="is_name" id="is_name" value="<?php echo $job->is_name; ?>">
+					     			<input type="hidden" name="is_phonenumber" id="is_phonenumber" value="<?php echo $job->is_phonenumber; ?>">
+					     			<input type="hidden" name="is_email" id="is_email" value="<?php echo $job->is_email; ?>">
+					     			<input type="hidden" name="is_currentjob" id="is_currentjob" value="<?php echo $job->is_currentjob; ?>">
+					     			<input type="hidden" name="is_previousjobs" id="is_previousjobs" value="<?php echo $job->is_previousjobs; ?>">
+					     			<input type="hidden" name="is_description" id="is_description" value="<?php echo $job->is_description; ?>">
+					     			
+					            	<div class="col-sm-6">
+					            		<?php if(isset($contacts)): ?>
+										<div class="row">
+											<div class="col-sm-5 padding-top-xs text-right">
+												<span class="span-job-description-title"><?php echo trans('job.contact'); ?> :</span>
+											</div>
+											<div class="col-sm-7">
+						            			<select class="form-control" id="js_select_contact" onchange="fillInput(this);">
+						            				<option value=""> </option>
+						            				<?php foreach($contacts as $contact): ?>
+						            					<option value="<?php echo $contact->id; ?>"><?php echo $contact->name; ?></option>
+						            				<?php endforeach; ?>
+						            			</select>													
+											</div>
+										</div>
+					            		<?php endif; ?>
+										<?php if ($job->is_name) {?>
+										<div class="row margin-top-xs">
+											<div class="col-sm-5 padding-top-xs text-right">
+												<span class="span-job-description-title"><?php echo trans('job.name'); ?>:</span>
+											</div>
+											<div class="col-sm-7">
+												<input class="form-control" name="name" type="text" id="name">
+											</div>
+										</div>
+										<?php }?>
+										<?php if ($job->is_phonenumber) {?>
+										<div class="row margin-top-xs">
+											<div class="col-sm-5 padding-top-xs text-right">
+												<span class="span-job-description-title"><?php echo trans('job.phone_number'); ?>:</span>
+											</div>
+											<div class="col-sm-7">
+												<input class="form-control" name="phone" type="text" id="phone">
+											</div>
+										</div>
+										<?php }?>
+										<?php if ($job->is_email) {?>
+										<div class="row margin-top-xs">
+											<div class="col-sm-5 padding-top-xs text-right">
+												<span class="span-job-description-title"><?php echo trans('job.email'); ?>:</span>
+											</div>
+											<div class="col-sm-7">
+												<input class="form-control" name="email" type="text" id="email">
+											</div>
+										</div>
+										<?php }?>
+										<?php if ($job->is_currentjob) {?>
+										<div class="row margin-top-xs">
+											<div class="col-sm-5 padding-top-xs text-right">
+												<span class="span-job-description-title"><?php echo trans('job.current_job'); ?>:</span>
+											</div>
+											<div class="col-sm-7">
+												<input class="form-control" name="currentJob" type="text" id="currentJob">
+											</div>
+										</div>
+										<?php }?>
+										<?php if ($job->is_previousjobs) {?>
+										<div class="row margin-top-xs">
+											<div class="col-sm-5 padding-top-xs text-right">
+												<span class="span-job-description-title"><?php echo trans('job.previous_jobs'); ?>:</span>
+											</div>
+											<div class="col-sm-7">
+												<input class="form-control" name="previousJobs" type="text" id="previousJobs">
+											</div>
+										</div>
+										<?php }?>						            		
+					            	</div>
+					            	
+					            	<div class="col-sm-5">
+					            			
+										<?php if ($job->is_description) {?>
+										<div class="row">
+											<div class="col-sm-12 text-left">
+												<span class="span-job-description-title"><?php echo trans('job.description'); ?>:</span>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12">
+												<textarea class="form-control" name="description" id="description" rows="3"></textarea>
+											</div>
+										</div>
+										<?php }?>
+					            	</div>
+					            </div>
+					            
+					            <div class="row margin-top-xs">
+					            	<div class="col-sm-12 text-center">
+										<div class="row margin-top-xs">
+											<a class="btn btn-success btn-sm btn-home" style="padding: 5px 30px;" id="js-a-hint" data-id="<?php echo $job->id; ?>">Submit</a>
+										</div>	
+					            	</div>
+					            </div>													
+					        </div>								
+						</div>					
+					</div>
+					<!-- End for Hint -->
+					
+					<!-- Div for Apply -->
+					<div class="row" id="div_apply" style="display: none;">
+						<div class="col-sm-12">
+							<div class="col-sm-12">
+								<div class="alert alert-success alert-dismissibl fade in alert-custom">
+						            <button type="button" class="close" data-target="div_apply" onclick="hideView(this)">
+						                <span aria-hidden="true">&times;</span>
+						                <span class="sr-only">Close</span>
+						            </button>
+
+						            <form method="POST" action="<?php echo URL::route('user.job.doApply'); ?>" role="form" class="form-login margin-top-normal" id="js_job_apply_form" enctype="multipart/form-data">
+
+						                <input type="hidden" name="job_id" value="<?php echo $job->id; ?>" />
+
+                                        <div class="row">
+                                            <div class="col-sm-2 col-sm-offset-1">
+                                                <?php echo Form::label('', 'Pattern', ['class' => 'margin-top-xs job-form-label']); ?>
+
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" onchange="changePattern(this);">
+                                                    <?php foreach($patterns as $pattern): ?>
+                                                    <option value="<?php echo $pattern->name; ?>" data-description="<?php echo $pattern->description; ?>"><?php echo $pattern->name; ?></option>
+                                                    <?php endforeach; ?>
+                                                    <option value="" data-descripton=""><?php echo trans('job.other'); ?></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row margin-top-xs">
+                                            <div class="col-sm-2 col-sm-offset-1">
+                                                <?php echo Form::label('', trans('job.title'), ['class' => 'margin-top-xs job-form-label']); ?>
+
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <?php echo Form::text('name', $patterns[0]->name, ['class' => 'form-control', 'id' => 'title']); ?>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row margin-top-xs">
+                                            <div class="col-sm-2 col-sm-offset-1">
+                                                <?php echo Form::label('', trans('job.description'), ['class' => 'margin-top-xs job-form-label']); ?>
+
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <?php echo Form::textarea('description', $patterns[0]->description, ['class' => 'form-control job-description', 'rows' => '5', 'id' => 'description']); ?>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row margin-top-xs">
+                                            <div class="col-sm-2 col-sm-offset-1">
+                                                <?php echo Form::label('', trans('job.add_attachments'), ['class' => 'margin-top-xs job-form-label']); ?>
+
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <?php echo Form::file('attachFile', ['class' => 'form-control', 'id' => 'file']); ?>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row margin-top-sm">
+                                            <div class="col-sm-8 col-sm-offset-3 text-right">
+                                                <div class="col-sm-4 col-sm-offset-8 text-right">
+                                                    <button class="btn btn-sm btn-primary text-uppercase btn-block">SUBMIT</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+						        </div>								
+							</div>
+						</div>
+					</div>
+					<!-- End for Apply -->
+				</div>
+			</div>
+			<?php endforeach; ?>
+
+			<div class="row margin-top-xs" style="<?php echo (count($jobs) > 0) ? 'display: none;' : ''; ?>" id="div-no-job">
+				<div class="col-sm-12">
+					<div class="col-sm-12 padding-top-sm padding-bottom-sm text-center" style="background-color: white;">
+						<?php echo trans('job.there_is_no_jobs'); ?>
+
+					</div>
+				</div>
+			</div>
+            <div class="pull-right margin-top-sm margin-bottom-normal"><?php echo $jobs->appends(Request::input())->links(); ?></div>
+        </div>
+    </div>
+</div>
+
+<?php /*Select Boxs for Sub-Categories */ ?>
+<?php foreach($categories as $category): ?>
+    <select class="form-control hidden" id="select-sub-<?php echo $category->id; ?>" name="sub_category_id">
+        <option value="">All</option>
+        <?php foreach($category->child as $sCategory): ?>
+            <option value="<?php echo $sCategory->id; ?>"  <?php if($sub_category_id == $sCategory->id): ?> selected <?php endif; ?>><?php echo $sCategory->name; ?></option>
+        <?php endforeach; ?>
+    </select>
+<?php endforeach; ?>
+<?php /**/ ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('custom-scripts'); ?>
+    <script type="text/javascript" src="/assets/js/bootstrap-slider.js"></script>
+    <?php echo $__env->make('js.user.job.search', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('user.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

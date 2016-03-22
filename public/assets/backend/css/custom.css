@@ -1,0 +1,89 @@
+/*
+Author: John Freed
+Website: http://innomaid.com/
+*/
+
+/*margin auto*/
+.margin_auto{ margin: 0px auto;}
+/*margin top class*/
+.margin_top_10{ margin-top: 10px; }
+.margin_top_20{ margin-top: 20px; }
+.margin_top_40{ margin-top: 40px; }
+
+/*margin bottom class*/
+.margin_bottom_10{ margin-bottom: 10px; }
+.margin_bottom_20{ margin-bottom: 20px; }
+.margin_bottom_40{ margin-bottom: 40px; }
+
+/*margin left class*/
+.margin_left_10{ margin-left: 10px; }
+.margin_left_20{ margin-left: 20px; }
+.margin_left_40{ margin-left: 40px; }
+
+/*float*/
+.float_left{ float: left; }
+.float_right{ float: right; }
+/*text-align*/
+.align_left{ text-align: left; }
+.align_right{ text-align: right; }
+.align_center{ text-align: center; }
+
+/*radius 5px*/
+.radius_all_5{ border-radius: 5px;}
+.radius_left_5{ border-radius: 5px 0px 0px 5px;}
+.radius_right_5{ border-radius: 0px 5px 5px 0px;}
+.radius_top_5{ border-radius: 5px 5px 0px 0px;}
+.radius_bottom_5{ border-radius: 0px 0px 5px 5px;}
+
+/*radius 10px*/
+.radius_all_10{ border-radius: 10px;}
+.radius_left_10{ border-radius: 10px 0px 0px 10px;}
+.radius_right_10{ border-radius: 0px 10px 10px 0px;}
+.radius_top_10{ border-radius: 10px 10px 0px 0px;}
+.radius_bottom_10{ border-radius: 0px 0px 10px 10px;}
+
+/*radius 15px*/
+.radius_all_15{ border-radius: 15px;}
+.radius_left_15{ border-radius: 15px 0px 0px 15px;}
+.radius_right_15{ border-radius: 0px 15px 15px 0px;}
+.radius_top_15{ border-radius: 15px 15px 0px 0px;}
+.radius_bottom_15{ border-radius: 0px 0px 15px 15px;}
+
+.subtitle_text{
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+#profileImg_profile{
+    border: 1px solid #b0b5b9;
+}
+#profileImg_full{
+    border: 1px solid #b0b5b9;
+}
+
+.border_img{
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 10px solid rgba(255,255,255,0.3);
+    display: inline-block;
+}
+
+thead{
+    background-color: #E6E6FA;
+}
+
+.listButtonDiv{
+    position: absolute;
+}
+
+.listButtonDiv a{
+}
+.listButtonDiv a button{
+    border: 1px solid #ffffff;
+    text-align: left;
+}
+
+#dropDownBox{
+    top : inherit!important;
+    left: inherit!important;
+}

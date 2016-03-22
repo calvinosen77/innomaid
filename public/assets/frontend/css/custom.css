@@ -1,0 +1,190 @@
+/*
+Author: John Freed
+Website: http://innomaid.com/
+*/
+
+/*margin auto*/
+.margin_auto{ margin: 0px auto;}
+/*margin top class*/
+.margin_top_10{ margin-top: 10px; }
+.margin_top_20{ margin-top: 20px; }
+.margin_top_40{ margin-top: 40px; }
+
+/*margin bottom class*/
+.margin_bottom_10{ margin-bottom: 10px; }
+.margin_bottom_20{ margin-bottom: 20px; }
+.margin_bottom_40{ margin-bottom: 40px; }
+
+/*margin left class*/
+.margin_left_10{ margin-left: 10px; }
+.margin_left_20{ margin-left: 20px; }
+.margin_left_40{ margin-left: 40px; }
+
+/*float*/
+.float_left{ float: left; }
+.float_right{ float: right; }
+/*text-align*/
+.align_left{ text-align: left; }
+.align_right{ text-align: right; }
+.align_center{ text-align: center; }
+
+/*radius 5px*/
+.radius_all_5{ border-radius: 5px;}
+.radius_left_5{ border-radius: 5px 0px 0px 5px;}
+.radius_right_5{ border-radius: 0px 5px 5px 0px;}
+.radius_top_5{ border-radius: 5px 5px 0px 0px;}
+.radius_bottom_5{ border-radius: 0px 0px 5px 5px;}
+
+/*radius 10px*/
+.radius_all_10{ border-radius: 10px;}
+.radius_left_10{ border-radius: 10px 0px 0px 10px;}
+.radius_right_10{ border-radius: 0px 10px 10px 0px;}
+.radius_top_10{ border-radius: 10px 10px 0px 0px;}
+.radius_bottom_10{ border-radius: 0px 0px 10px 10px;}
+
+/*radius 15px*/
+.radius_all_15{ border-radius: 15px;}
+.radius_left_15{ border-radius: 15px 0px 0px 15px;}
+.radius_right_15{ border-radius: 0px 15px 15px 0px;}
+.radius_top_15{ border-radius: 15px 15px 0px 0px;}
+.radius_bottom_15{ border-radius: 0px 0px 15px 15px;}
+
+.category_title{
+    font-weight: 600;
+    color: #414244;
+    font-size: 12pt;
+    margin-top: 15px;
+}
+.category_title:hover{
+    font-weight: 600;
+    color: red;
+}
+
+/*background color*/
+.bg_color_grey{
+    background-color: #f0f3f5;
+}
+.bg_color_white{
+    background-color: #fdfefe;
+}
+.column_left{
+    background-color: #f0f3f5;
+}
+
+/*left side*/
+.left_side_mark_red{
+    height: 6px;
+    background: url('../img/custom/mark_red.png') no-repeat left top;
+}
+.list-unstyled li a{
+    font-weight: 600;
+    color: grey;
+}
+.category a:hover{
+    text-decoration: underline;
+    color: blue;
+}.category a h3:hover{
+    text-decoration: underline;
+    color: red;
+}
+
+/*content*/
+.login_img{
+    margin-top: 2px;
+    height: 36px;
+    background: url('../img/custom/login_bar.png')  repeat-x;
+    font-size: 9pt;
+}
+.login_img div{
+    padding: 5px 0px 0px 0px;
+
+}
+.login_img div a label:hover{
+    color: black;
+    cursor: pointer;
+}
+.banner_girl{
+    height: 250px;
+    background: url('../img/custom/banner_girl_cut.png') bottom right no-repeat;
+}
+.banner_box{
+    height: 250px;
+    background: url('../img/custom/banner_box_bar.png') bottom repeat-x;
+}
+.banner_group{
+    height: 250px;
+    background: url('../img/custom/banner_group_cut.png') bottom left no-repeat;
+}
+.banner_label{
+    color: #ffffff;
+    vertical-align: sub;
+    font-weight: 600;
+}
+.advanced_search{
+    text-decoration: underline;
+}
+.advanced_search:hover{
+    color: #ffff00;
+    cursor: pointer;
+}
+.profile_img{
+    border: solid 2px #d4dadf;
+    width: 90px;
+    height: 120px;
+}
+.profile_wrap{
+    margin-left: 20px;
+    background-color: #ffffff;
+    padding: 10px 10px 0px 10px;
+    border: solid 1px #d4dadf;
+}
+.profile_name{
+    color: #67555b;
+    font-size: 9pt;
+}
+.profile_from, .profile_age, .profile_type, .profile_salary, .profile_daysoff{
+    font-size: 8pt;
+    font-weight: bold;
+    color: #262626;
+    margin: 0px;
+    padding: 0px;
+    display: block;
+}
+.profile_country, .profile_salary_value{
+    color: red;
+}
+.profile_company{
+    font-size: 7pt;
+    color: #3d5db9;
+    font-weight: bold;
+}
+.profile_bottom{
+    color: #696d6f;
+    font-size: 7pt;
+    padding: 0px 5px;
+}
+.profile_bottom div{
+    border-top: 1px solid #d2d8da;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #eaf2f5;
+}
+
+.enable_div{
+    display: block;
+}
+.disable_div{
+    display: none;
+}
+
+.no_hover:hover{
+    color: #414244;
+}
+
+.search_select{
+    height: 25px;
+    padding: 0px;
+    color: black;
+}
+

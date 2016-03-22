@@ -1,0 +1,155 @@
+<?php $__env->startSection('styles'); ?>
+
+    <!-- Bootstrap core CSS -->
+	<?php echo HTML::style('/assets/frontend/css/bootstrap.min.css'); ?>
+
+	<?php echo HTML::style('/assets/frontend/css/theme.css'); ?>
+
+	<?php echo HTML::style('/assets/frontend/css/bootstrap-reset.css'); ?>
+
+	<!--external css-->
+	<?php echo HTML::style('/assets/frontend/font-awesome/css/font-awesome.css'); ?>
+
+	<?php echo HTML::style('/assets/frontend/css/flexslider.css'); ?>
+
+	<?php echo HTML::style('/assets/frontend/bxslider/jquery.bxslider.css'); ?>
+
+    <!-- Custom styles for this template -->
+    <?php echo HTML::style('/assets/frontend/css/style.css'); ?>
+
+    <?php echo HTML::style('/assets/frontend/css/style-responsive.css'); ?>
+
+
+    <?php echo HTML::style('/assets/frontend/css/custom.css'); ?>
+
+    <?php echo HTML::style('/assets/frontend/css/bootstrap-dialog.min.css'); ?>
+
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('custom-styles'); ?>
+
+    <!--right slidebar-->
+    <?php echo HTML::style('/assets/frontend/css/slidebars.css'); ?>
+
+    <!--toastr-->
+    <?php echo HTML::style('/assets/frontend/css/toastr.css'); ?>
+
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('header'); ?>
+
+  <body style="background-color: #eef3fa;">
+    <!--container start-->
+    <div class="container">
+        <div class="row"  style="background-color: #ffffff;">
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('body'); ?>
+            <div class="col-lg-3">
+                <div class="align_center">
+                    <div class="margin_top_40"></div>
+                        <a href="<?php echo URL::route('user.user.index'); ?>"><img src="/assets/frontend/img/custom/left_banner.png" height="48px"></a>
+                        <img src="/assets/frontend/img/custom/left_banner_title.png" height="16px">
+
+                        <form class="navbar-form" role="search" id="side_search">
+                            <div class="input-group margin_top_20">
+                                <input type="text" class="form-control radius_left_15" placeholder="Search ..." name="search_keyword" value="">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default radius_right_15" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+                <div class="blog-side-item margin_top_40">
+                    <div class="left_side_mark_red"></div>
+                    <div class="category">
+                        <a href="<?php echo URL::route('user.user.index'); ?>"><h4 class="category_title">Home</h4></a>
+                        <h4 class="category_title no_hover">Search Maid</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="<?php echo URL::route('user.maidfilter.allGetMaid'); ?>"><i class="  fa fa-angle-right"></i> Show All Bio Data</a></li>
+                            <li><a href="<?php echo URL::route('user.maidfilter.countryGetMaid', 'Filipin'); ?>"><i class="  fa fa-angle-right"></i> Filipino Maid</a></li>
+                            <li><a href="<?php echo URL::route('user.maidfilter.countryGetMaid', 'Myanmarese'); ?>"><i class="  fa fa-angle-right"></i> Myanmarese Maid</a></li>
+                            <li><a href="<?php echo URL::route('user.maidfilter.countryGetMaid', 'Indian'); ?>"><i class="  fa fa-angle-right"></i> Indian Maid</a></li>
+                            <li><a href="<?php echo URL::route('user.maidfilter.countryGetMaid', 'Bangladeshi'); ?>"><i class="  fa fa-angle-right"></i> Bangladeshi Maid</a></li>
+                            <li><a href="<?php echo URL::route('user.maidfilter.countryGetMaid', 'SriLankan'); ?>"><i class="  fa fa-angle-right"></i> Sri Lankan Maid</a></li>
+                            <li><a href="<?php echo URL::route('user.maidfilter.agencyGetMaid', 'Fresh'); ?>"><i class="  fa fa-angle-right"></i> Fresh Maid</a></li>
+                            <li><a href="<?php echo URL::route('user.maidfilter.agencyGetMaid', 'Transfer'); ?>"><i class="  fa fa-angle-right"></i> Transfer Maid</a></li>
+                            <li><a href="<?php echo URL::route('user.maidfilter.agencyGetMaid', 'Ex-Singapore'); ?>"><i class="  fa fa-angle-right"></i> Ex-Singapore Maid</a></li>
+                            <li><a href="<?php echo URL::route('user.maidfilter.agencyGetMaid', 'Experienced'); ?>"><i class="  fa fa-angle-right"></i> Experienced Maid</a></li>
+                        </ul>
+                        <a href="#"><h4 class="category_title">Maid Agency</h4></a>
+                        <a href="#"><h4 class="category_title">F&Q</h4></a>
+                        <a href="#"><h4 class="category_title">Useful Links</h4></a>
+                        <a href="#"><h4 class="category_title">Request Maid</h4></a>
+                        <a href="#"><h4 class="category_title">My Shortlisted(3)</h4></a>
+                        <a href="#"><h4 class="category_title">My Compare List</h4></a>
+                    </div>
+                    <div class="left_side_mark_red margin_top_40 margin_bottom_40"></div>
+
+                </div>
+
+            </div>
+            <!--//end side bar-->
+    <?php echo $__env->yieldContent('content'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer'); ?>
+            </div>
+        </div>
+        <!--footer start-->
+        <div class="row" style="height: 50px; background-color: #2b2b2b;">
+            <div class="col-lg-3 col-md-3 col-sm-3">
+            </div>
+            <div class="col-lg-5 col-md-3 col-sm-5">
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-1">
+            </div>
+        </div>
+        <!--//footer-->
+    </div>
+    <!--container end-->
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <?php echo HTML::script('/assets/frontend/js/jquery.js'); ?>
+
+    <?php echo HTML::script('/assets/frontend/js/bootstrap.min.js'); ?>
+
+
+    <?php echo HTML::script('/assets/frontend/js/hover-dropdown.js'); ?>
+
+    <?php echo HTML::script('/assets/frontend/js/jquery.flexslider.js'); ?>
+
+    <?php echo HTML::script('/assets/frontend/bxslider/jquery.bxslider.js'); ?>
+
+    <?php echo HTML::script('/assets/frontend/js/link-hover.js'); ?>
+
+
+    <?php echo HTML::script('/assets/frontend/js/common-scripts.js'); ?>
+
+
+    <?php echo HTML::script('/assets/frontend/js/bootstrap-dialog.min.js'); ?>
+
+
+    <!--toastr-->
+    <?php echo HTML::script('/assets/frontend/js/toastr.js'); ?>
+
+
+    <?php echo HTML::script('/assets/frontend/js/jquery.min.js'); ?>
+
+    <?php echo HTML::script('/assets/frontend/js/jquery.twbsPagination.js'); ?>
+
+
+    <?php echo HTML::script('/assets/frontend/js/jquery.easing.min.js'); ?>
+
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

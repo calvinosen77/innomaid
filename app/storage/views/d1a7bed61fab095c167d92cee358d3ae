@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keyword" content="innomaid, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <title>
+        <?php $__env->startSection('title'); ?>
+            <?php echo SITE_NAME . $title; ?>
+
+        <?php echo $__env->yieldSection(); ?>
+    </title>
+
+
+    <?php echo $__env->yieldContent('styles'); ?>
+
+
+    <?php echo $__env->yieldContent('custom-styles'); ?>
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <?php echo HTML::script('/assets/js/html5shiv.js'); ?>
+
+    <?php echo HTML::script('/assets/js/respond.min.js'); ?>
+
+    <![endif]-->
+
+</head>
+<body>    
+    <?php echo $__env->yieldContent('header'); ?>
+    
+    <?php echo $__env->yieldContent('body'); ?>
+    
+    <?php echo $__env->yieldContent('footer'); ?>
+</body>
+
+
+    <?php echo $__env->yieldContent('header-scripts'); ?>
+
+    <?php echo $__env->yieldContent('scripts'); ?>
+
+    <?php echo $__env->yieldContent('custom-scripts'); ?>
+
+</html>
